@@ -6,11 +6,11 @@ open class Carteira(
 ) {
 
      fun monstrarSaldo(){
-        println("mostrou o saldo")
+        println("Seu saldo atual é de: ${formatacaoDinheiro.format(saldo)}")
     }
 
     fun mostrarExtrato(){
-        println("mostrou o extrato")
+        println("Seu extrato: \n$extrato")
     }
 
 }
@@ -22,9 +22,21 @@ class CarteiraFisica(
     extratoCF: String,
 ):Carteira(senhaCarteira = senhaCF, tipo = tipoCF, saldo = saldoCF, extrato = extratoCF) {
 
-    fun deposito(){}
+    fun deposito(){
+        println("Qual o valor do depósito?")
+        val deposito = readln().toDouble()
+        saldo += deposito
+        println("Valor de ${formatacaoDinheiro.format(deposito)} depositado!!")
+        extrato += "Deposito de $deposito \n"
+    }
 
-    fun saque(){}
+    fun saque(){
+        println("Qual o valor do saque?")
+        val saque = readln().toDouble()
+        saldo -= saque
+        println("Saque de ${formatacaoDinheiro.format(saque)} realizado!!")
+        extrato += "Saque de $saque \n"
+    }
 
     fun pagarBoleto(){}
 

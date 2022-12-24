@@ -11,7 +11,7 @@ enum class MenuFuncionalidades(val menu: String) {
             1 ----------------- SALDO
             2 -------------- DEPOSITO
             3 ----------------- SAQUE
-            4 ----------- PAGARBOLETO
+            4 ---------- PAGAR BOLETO
             5 --------------- EXTRATO
             ====== 0 - FECHAR =======
             """.trimIndent()),
@@ -28,7 +28,6 @@ enum class MenuFuncionalidades(val menu: String) {
             ========= 0 - FECHAR  =========
             """.trimIndent()),
 
-    /*VER SE ACRECSCENTA ESSE SELETOR NOS OUTROS PLANOS*/
     MostrarCarteiras(
         menu = """
             ======= MINHAS CARTEIRAS ======

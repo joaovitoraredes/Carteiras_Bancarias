@@ -2,11 +2,13 @@ import Planos.*
 import kotlin.random.Random
 import MenuPLanos.*
 
-var cliente = dc_Cliente(nome = "", sobrenome = "", cpf = "", senha = "", plano = SEM_PLANO)
+var cliente = Cliente(nome = "", sobrenome = "", cpf = "", senha = "", plano = SEM_PLANO)
 
 class Cadastro {
 
     init {
+        println("Bem Vindo ao Banco Kotlin!!")
+
         cadastroNome()
         cadastroSobrenome()
         cadastroCpf()
@@ -17,21 +19,18 @@ class Cadastro {
     }
 
     private fun cadastroNome() {
-//        println("Qual seu nome: ")
-//        cliente.nome = readln()
-        cliente.nome = "João"
+        println("Qual seu nome: ")
+        cliente.nome = readln()
     }
 
     private fun cadastroSobrenome() {
-//        println("Qual seu sobrenome: ")
-//        cliente.sobrenome = readln()
-        cliente.sobrenome = "Aredes"
+        println("Qual seu sobrenome: ")
+        cliente.sobrenome = readln()
     }
 
     private fun cadastroCpf() {
-//        println("Qual seu Cpf: ")
-//        cliente.cpf = readln()
-        cliente.cpf = "15226364910"
+        println("Qual seu Cpf: ")
+        cliente.cpf = readln()
 
         //Formatando CPF
         val padraoEsperado: Regex = "([0-9]{3})([0-9]{3})([0-9]{3})([0-9]{2})".toRegex()
@@ -40,12 +39,6 @@ class Cadastro {
         cliente.cpf = cliente.cpf.replace(padraoEsperado,padraoFormatado)
     }
 
-//    private fun cadastroSenha() {
-//        println("Digite uma senha: ")
-//        usuario.senha = readln()
-//    }
-
-/*  Acrescentar caracteres*/
     private fun geradorDeSenha(){
         var senhaAleatoria = ""
         repeat(10) {
