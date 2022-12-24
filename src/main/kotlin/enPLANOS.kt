@@ -14,6 +14,5 @@ enum class MenuPLanos(val menu: String) {
         3 ------------------ PREMIUM
         ======== 0 - FECHAR ========
     """.trimIndent()
-
     )
 }

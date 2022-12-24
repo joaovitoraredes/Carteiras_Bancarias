@@ -1,4 +1,4 @@
-open class Cliente(
+open class dcCliente(
     var nome: String,
     var sobrenome: String,
     var cpf: String,
@@ -12,7 +12,8 @@ open class Cliente(
             ||           CPF: $cpf | Senha: $senha              ||
             ||                        Plano ${plano.extenso}                           ||
             ||   Carteiras Disponiveis -> ${plano.carteiras}  ||
-            =========================== BANCO KOTLIN ======-=====================
+            =========================== BANCO KOTLIN ============================
+                        PRESSIONE "0" PARA VOLTAR AO MENU PRINCIPAL
         """.trimIndent()
     }
 }

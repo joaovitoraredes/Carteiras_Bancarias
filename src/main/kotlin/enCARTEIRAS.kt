@@ -36,3 +36,24 @@ enum class MenuFuncionalidades(val menu: String) {
             ========= 0 - FECHAR  =========
             """.trimIndent()),
 }
+
+//Será que realmente tem a necessidade de criar as funcionalidades de cada um com o Id
+
+enum class FuncionalidadesCarteiraFisica() {
+    SALDO(),
+    DEPOSITO,
+    SAQUE,
+    PAGARBOLETO,
+    EXTRATO,
+    SAIR,
+}
+
+enum class FuncionalidadesCarteiraDigital {
+    SALDO,
+    TRASNFERENCIAPIX,
+    PAGARBOLETO,
+    INVESTIR,
+    GUARDAR,
+    EXTRATO,
+    SAIR
+}

@@ -1,87 +1,136 @@
 import MenuFuncionalidades.*
 import Planos.*
 import Carteiras.*
-import java.text.DecimalFormat
+import enPaineis.*
 import java.text.NumberFormat
 import java.util.*
 
-var minhaCarteiraFisica = CarteiraFisica("",CARTEIRA_FISICA,0.0,"")
-var minhaCarteiraDigital = CarteiraDigital("",CARTEIRA_DIGITAL,0.0,"")
+var escolha: Int = 1
 
-val formatacaoDinheiro: NumberFormat = DecimalFormat.getCurrencyInstance(Locale("pt", "BR"))
-var selecao = 10
+var minhaCarteiraFisica = CarteiraFisica()
+//var minhaCarteiraDigital = CarteiraDigital()
 
+val currencyFormatter: NumberFormat = NumberFormat.getCurrencyInstance(Locale.forLanguageTag("pt-BR"))
 
-class Banco{
+class Banco {
 
     init {
         when (cliente.plano) {
-        SEM_PLANO -> println("Você ainda não é nosso cliente")
-        NORMAL -> carteiraFisica()
-        DIGITAL -> carteiraDigital()
-        PREMIUM -> seletorCarteira()
+            SEM_PLANO -> println("Você ainda não é nosso cliente")
+            NORMAL -> clienteNormal()
+            DIGITAL -> carteiraDigital()
+            PREMIUM -> seletorCarteira()
         }
     }
 
-    private fun carteiraFisica(){
+    //CLIENTES
+    private fun clienteNormal() {
+        println(PainelClienteNormal.menu)
 
-//        println("Escolha a senha para a sua carteira!!")
-//        var senha = readln()
+        when (readln().toInt()) {
+            1 -> if (validacaoSenha()) carteiraFisica()
+            2 -> if (validacaoSenha()) printarDados()
+            0 -> return println("Fechando Banco...")
+        }
+    }
+
+    //CARTEIRAS
+    private fun carteiraFisica() {
 
         println(CarteiraFisicaMenu.menu)
-        selecao = readln().toInt()
+        escolha = readln().toInt()
 
-        do{
-        when(selecao) {
-            1 -> minhaCarteiraFisica.monstrarSaldo()
-            2 -> minhaCarteiraFisica.deposito()
-            3 -> minhaCarteiraFisica.saque()
-            4 -> minhaCarteiraFisica.pagarBoleto()
-            5 -> minhaCarteiraFisica.mostrarExtrato()
+        do {
+            when (escolha) {
+                1 -> minhaCarteiraFisica.monstrarSaldo()
+                2 -> minhaCarteiraFisica.deposito()
+                3 -> minhaCarteiraFisica.saque()
+//              4 -> minhaCarteiraFisica.pagarBoleto()
+                5 -> minhaCarteiraFisica.mostrarExtrato()
+                0 -> clienteNormal()
             }
-            voltarMenuPrincipal()
-        }while (selecao!=0)
-
+            manterPainel()
+        } while (escolha != 0)
     }
 
-    private fun carteiraDigital(){
+    private fun carteiraDigital() {
+
         println(CarteiraDigitalMenu.menu)
-        selecao = readln().toInt()
+        val escolha = readln().toInt()
 
-        do{
 
-            when(selecao) {
-                1 -> minhaCarteiraDigital.monstrarSaldo()
-                2 -> minhaCarteiraDigital.transferenciaPix()
-                3 -> minhaCarteiraDigital.pagarBoleto()
-                4 -> minhaCarteiraDigital.investir()
-                5 -> minhaCarteiraDigital.guardar()
-                6 -> minhaCarteiraDigital.mostrarExtrato()
-            }
-            voltarMenuPrincipal()
-        }while (selecao!=0)
+//        do{
+//            when(escolha) {
+//                1 -> minhaCarteiraDigital.monstrarSaldo()
+//                2 -> minhaCarteiraDigital.transferenciaPix()
+//                3 -> minhaCarteiraDigital.pagarBoleto()
+//                4 -> minhaCarteiraDigital.investir()
+//                5 -> minhaCarteiraDigital.guardar()
+//                6 -> minhaCarteiraDigital.mostrarExtrato()
+//            }
+//                voltarMenuPrincipal()
+//        } while (escolha!=0)
     }
 
-    private fun seletorCarteira(){
+    private fun seletorCarteira() {
+
         println(MostrarCarteiras.menu)
-        when(readln().toInt()){
+        when (readln().toInt()) {
             CARTEIRA_FISICA.id -> carteiraFisica()
             CARTEIRA_DIGITAL.id -> carteiraDigital()
         }
     }
 
+    private fun printarDados() {
+        println(cliente)
+
+        while (readln().toInt() != 0){
+            println("Entrada inválida!! \nPRESSIONE \"0\" PARA VOLTAR AO MENU PRINCIPAL")
+        }
+        clienteNormal()
+    }
+
+    private fun manterPainel(){
+        var voltar = readln().toInt()
+        while (voltar != 0){
+            println("Entrada inválida!!")
+            voltar = readln().toInt()
+        }
+        carteiraFisica()
+    }
+
+
+
+
+
+    //FIM
 }
 
-fun voltarMenuPrincipal(){
+
+fun voltarMenuPrincipal() {
     println("Voltar - 0")
-    when(readln().toInt()){
+    when (readln().toInt()) {
         0 -> {
             println(CarteiraFisicaMenu.menu)
-            selecao = readln().toInt()
+            escolha = readln().toInt()
         }
+
         else -> {
             println("Entrada inválida!!")
             voltarMenuPrincipal()
         }
+    }
+}
+
+// Jogar essa função para uma classe a parte
+fun validacaoSenha(): Boolean {
+    println("Entre com a sua senha: ")
+    val senhaParaValidar = readln()
+
+    return if (senhaParaValidar == cliente.senha) {
+        true
+    } else {
+        println("Senha inválida:")
+        validacaoSenha()
     }
 }
