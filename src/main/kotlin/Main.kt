@@ -27,4 +27,3 @@ fun main() {
 //Tratar retornada aos menus, conferir todas
 //LEMBRAR DE NAO DEIXAR TRANSFERIR SE ULTRAPASSAR O SALDO TOTAL
 
-

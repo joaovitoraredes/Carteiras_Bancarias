@@ -71,21 +71,7 @@ class Cadastro {
 //                escolhaPlano()
 //            }
 //        }
-      cliente.plano = DIGITAL
-    }
-}
-
-fun validarVazio(stringParaValidar: String?, variavelValidada:String): String {
-
-    var validar = stringParaValidar
-
-    return if (validar.isNullOrEmpty() || validar.isBlank()) {
-        println("Entrada inválida!!")
-        println("Entre com seu $variavelValidada: ")
-        validar = readln()
-        validarVazio(validar, variavelValidada)
-    } else {
-        return validar
+      cliente.plano = PREMIUM
     }
 }
 

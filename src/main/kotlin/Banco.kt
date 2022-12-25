@@ -19,7 +19,7 @@ class Banco {
             SEM_PLANO -> println("Você ainda não é nosso cliente")
             NORMAL -> clienteNormal()
             DIGITAL -> clienteDigital()
-            PREMIUM -> seletorCarteira()
+            PREMIUM -> clientePremium()
         }
     }
 
@@ -27,20 +27,67 @@ class Banco {
     private fun clienteNormal() {
         println(PainelClienteNormal.menu)
 
-        when (readln().toInt()) {
+        try {
+            escolha = readln().toInt()
+        } catch (e: NumberFormatException) {
+            println("Entrada inválida!")
+            clienteNormal()
+        }
+
+        when (escolha) {
             1 -> if (validacaoSenha()) carteiraFisica()
             2 -> if (validacaoSenha()) printarDados()
             0 -> return println("Fechando Banco...")
+            else -> {
+                println("Entrada inválida!!")
+                clienteNormal()
+            }
         }
     }
 
     private fun clienteDigital() {
         println(PainelClienteDigital.menu)
 
-        when (readln().toInt()) {
+        try {
+            escolha = readln().toInt()
+        } catch (e: NumberFormatException) {
+            println("Entrada inválida!")
+            clienteDigital()
+        }
+
+        when (escolha) {
             1 -> if (validacaoSenha()) carteiraDigital()
             2 -> if (validacaoSenha()) printarDados()
             0 -> return println("Fechando Banco...")
+            else -> {
+                println("Entrada inválida!!")
+                clienteDigital()
+            }
+        }
+    }
+
+    private fun clientePremium() {
+        println(PainelClientePremium.menu)
+
+        try {
+            escolha = readln().toInt()
+        } catch (e: NumberFormatException) {
+            println("Entrada inválida!")
+            clientePremium()
+        }
+
+        when (escolha) {
+            1 -> if (validacaoSenha()) carteiraFisica()
+            2 -> if (validacaoSenha()) carteiraDigital()
+            3 -> if (validacaoSenha()) printarDados()
+            0 -> {
+                return println("Fechando Banco...")
+            }
+
+            else -> {
+                println("Entrada inválida!!")
+                clientePremium()
+            }
         }
     }
 
@@ -48,7 +95,13 @@ class Banco {
     private fun carteiraFisica() {
 
         println(CarteiraFisicaMenu.menu)
-        escolha = readln().toInt()
+
+        try {
+            escolha = readln().toInt()
+        } catch (e: NumberFormatException) {
+            println("Entrada inválida!")
+            carteiraFisica()
+        }
 
         do {
             when (escolha) {
@@ -57,17 +110,29 @@ class Banco {
                 3 -> minhaCarteiraFisica.saque()
 //              4 -> minhaCarteiraFisica.pagarBoleto()
                 5 -> minhaCarteiraFisica.mostrarExtrato()
-                0 -> clienteNormal()
+                0 -> return
                 else -> println(NenhumaSelecaoAceitavelVoltarMenu.menu)
             }
-            manterPainel()
+            manterPainelMF()
         } while (escolha != 0)
+
+        if (cliente.plano == PREMIUM) {
+            clientePremium()
+        } else {
+            clienteNormal()
+        }
     }
 
     private fun carteiraDigital() {
 
         println(CarteiraDigitalMenu.menu)
-        escolha = readln().toInt()
+
+        try {
+            escolha = readln().toInt()
+        } catch (e: NumberFormatException) {
+            println("Entrada inválida!")
+            carteiraDigital()
+        }
 
         do {
             when (escolha) {
@@ -77,27 +142,18 @@ class Banco {
                 4 -> minhaCarteiraDigital.investir()
                 5 -> minhaCarteiraDigital.guardar()
                 6 -> minhaCarteiraDigital.mostrarExtrato()
-                0 -> clienteDigital()
+                0 -> return
                 else -> println(NenhumaSelecaoAceitavelVoltarMenu.menu)
             }
-            voltarMenuPrincipal()
+            manterPainelMD()
         } while (escolha != 0)
 
-
-    }
-
-
-    private fun seletorCarteira() {
-
-        println(MostrarCarteiras.menu)
-        when (readln().toInt()) {
-            CARTEIRA_FISICA.id -> carteiraFisica()
-            CARTEIRA_DIGITAL.id -> carteiraDigital()
+        if (cliente.plano == PREMIUM) {
+            clientePremium()
+        } else {
+            clienteDigital()
         }
     }
-
-
-    //TODOS DEVEM TER WHEN VALIDO PARA A CARTEIRA QUE PRECISA
 
     private fun printarDados() {
         println(cliente)
@@ -113,7 +169,8 @@ class Banco {
         }
     }
 
-    private fun manterPainel() {
+
+    private fun manterPainelMF() {
         var voltar = readln().toInt()
         while (voltar != 0) {
             println("Entrada inválida!!")
@@ -123,18 +180,39 @@ class Banco {
         when (cliente.plano) {
             NORMAL -> carteiraFisica()
             DIGITAL -> carteiraDigital()
-            //         PREMIUM
+            PREMIUM -> carteiraFisica()
             else -> {}
         }
-        carteiraFisica()
+    }
+    private fun manterPainelMD() {
+        var voltar = readln().toInt()
+        while (voltar != 0) {
+            println("Entrada inválida!!")
+            voltar = readln().toInt()
+        }
+
+        when (cliente.plano) {
+            NORMAL -> carteiraFisica()
+            DIGITAL -> carteiraDigital()
+            PREMIUM -> carteiraDigital()
+            else -> {}
+        }
     }
 
     //FIM
 }
 
+fun voltarMenuOpcoes() {
 
-fun voltarMenuPrincipal() {
-    when (readln().toInt()) {
+    try {
+        escolha = readln().toInt()
+    } catch (e: NumberFormatException) {
+        println("Entrada inválida!")
+        println("0 - Voltar")
+        voltarMenuOpcoes()
+    }
+
+    when (escolha) {
         0 -> {
             when (cliente.plano) {
                 NORMAL -> {
@@ -146,19 +224,24 @@ fun voltarMenuPrincipal() {
                     println(CarteiraDigitalMenu.menu)
                     escolha = readln().toInt()
                 }
-                //          PREMIUM
+
+                PREMIUM -> {
+                    println(CarteiraDigitalMenu.menu)
+                    escolha = readln().toInt()
+                }
+
                 else -> {}
             }
         }
 
         else -> {
             println("Entrada inválida!!")
-            voltarMenuPrincipal()
+            voltarMenuOpcoes()
         }
     }
 }
 
-fun voltarMenuPrincipalDireto() {
+fun voltarMenuOpcoesDireto() {
 
     when (cliente.plano) {
         NORMAL -> {
@@ -174,7 +257,6 @@ fun voltarMenuPrincipalDireto() {
         else -> {}
     }
 }
-
 
 // Jogar essa função para uma classe a parte
 fun validacaoSenha(): Boolean {
