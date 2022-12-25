@@ -35,6 +35,11 @@ enum class MenuFuncionalidades(val menu: String) {
             2 ------------ CARTEIRA DIGITAL
             ========= 0 - FECHAR  =========
             """.trimIndent()),
+
+    NenhumaSelecaoAceitavelVoltarMenu(menu = """
+             Entrada inválida!!
+             PRESSIONE "0" PARA VOLTAR AO MENU DE OPÇÕES"
+             """.trimIndent())
 }
 
 //Será que realmente tem a necessidade de criar as funcionalidades de cada um com o Id

@@ -8,10 +8,10 @@ open class dcCliente(
     override fun toString(): String {
         return """
             =========================== MEUS DADOS =============================
-            ||                       ~  $nome $sobrenome ~                         ||
-            ||           CPF: $cpf | Senha: $senha              ||
-            ||                        Plano ${plano.extenso}                           ||
-            ||   Carteiras Disponiveis -> ${plano.carteiras}  ||
+                                      ~  $nome $sobrenome ~                         
+                          CPF: $cpf | Senha: $senha              
+                                       Plano ${plano.extenso}                           
+                  Carteiras Disponiveis -> ${plano.carteiras}  
             =========================== BANCO KOTLIN ============================
                         PRESSIONE "0" PARA VOLTAR AO MENU PRINCIPAL
         """.trimIndent()

@@ -7,7 +7,7 @@ var cliente = dcCliente(nome = "", sobrenome = "", cpf = "", senha = "", plano =
 class Cadastro {
 
     init {
-        println("Bem Vindo ao Banco Kotlin!!")
+//        println("Bem Vindo ao Banco Kotlin!!")
 
         cadastroNome()
         cadastroSobrenome()
@@ -20,19 +20,19 @@ class Cadastro {
 
     private fun cadastroNome() {
 //        println("Qual seu nome: ")
-//        cliente.nome = readln()
+//        cliente.nome = validarVazio(readln(),"nome")
         cliente.nome = "João"
     }
 
     private fun cadastroSobrenome() {
 //        println("Qual seu sobrenome: ")
-//        cliente.sobrenome = readln()
+//        cliente.sobrenome = validarVazio(readln(),"sobrenome")
         cliente.sobrenome = "Aredes"
     }
 
     private fun cadastroCpf() {
 //        println("Qual seu Cpf: ")
-//        cliente.cpf = readln()
+//        cliente.cpf = validarVazio(readln(),"cpf")
         cliente.cpf = "12345678911"
 
         //Formatando CPF
@@ -44,7 +44,7 @@ class Cadastro {
 
     private fun cadastroSenha(){
 //        println("Cadastre sua senha!!")
-//        cliente.senha = readln()
+//        cliente.senha = validarVazio(readln(),"senha")
         cliente.senha = "1234"
     }
 
@@ -60,12 +60,33 @@ class Cadastro {
     private fun escolhaPlano() {
 
 //        println(Plano.menu)
-//
+
 //        when (readln().toInt()) {
 //            NORMAL.id -> cliente.plano = NORMAL
 //            DIGITAL.id -> cliente.plano = DIGITAL
 //            PREMIUM.id -> cliente.plano = PREMIUM
+//            0 -> return
+//            else -> {
+//                println("Opção inválida!!")
+//                escolhaPlano()
+//            }
 //        }
-        cliente.plano = NORMAL
+      cliente.plano = DIGITAL
     }
 }
+
+fun validarVazio(stringParaValidar: String?, variavelValidada:String): String {
+
+    var validar = stringParaValidar
+
+    return if (validar.isNullOrEmpty() || validar.isBlank()) {
+        println("Entrada inválida!!")
+        println("Entre com seu $variavelValidada: ")
+        validar = readln()
+        validarVazio(validar, variavelValidada)
+    } else {
+        return validar
+    }
+}
+
+
