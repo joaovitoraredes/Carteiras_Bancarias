@@ -35,8 +35,8 @@ class Banco {
         }
 
         when (escolha) {
-            1 -> if (validacaoSenha()) carteiraFisica()
-            2 -> if (validacaoSenha()) printarDados()
+            1 -> carteiraFisica()
+            2 -> printarDados()
             0 -> return println("Fechando Banco...")
             else -> {
                 println("Entrada inválida!!")
@@ -56,8 +56,8 @@ class Banco {
         }
 
         when (escolha) {
-            1 -> if (validacaoSenha()) carteiraDigital()
-            2 -> if (validacaoSenha()) printarDados()
+            1 -> carteiraDigital()
+            2 -> printarDados()
             0 -> return println("Fechando Banco...")
             else -> {
                 println("Entrada inválida!!")
@@ -77,13 +77,10 @@ class Banco {
         }
 
         when (escolha) {
-            1 -> if (validacaoSenha()) carteiraFisica()
-            2 -> if (validacaoSenha()) carteiraDigital()
-            3 -> if (validacaoSenha()) printarDados()
-            0 -> {
-                return println("Fechando Banco...")
-            }
-
+            1 -> carteiraFisica()
+            2 -> carteiraDigital()
+            3 -> printarDados()
+            0 -> return println("Fechando Banco...")
             else -> {
                 println("Entrada inválida!!")
                 clientePremium()
@@ -110,7 +107,7 @@ class Banco {
                 3 -> minhaCarteiraFisica.saque()
 //              4 -> minhaCarteiraFisica.pagarBoleto()
                 5 -> minhaCarteiraFisica.mostrarExtrato()
-                0 -> return
+                0 -> break
                 else -> println(NenhumaSelecaoAceitavelVoltarMenu.menu)
             }
             manterPainelMF()
@@ -142,7 +139,7 @@ class Banco {
                 4 -> minhaCarteiraDigital.investir()
                 5 -> minhaCarteiraDigital.guardar()
                 6 -> minhaCarteiraDigital.mostrarExtrato()
-                0 -> return
+                0 -> break
                 else -> println(NenhumaSelecaoAceitavelVoltarMenu.menu)
             }
             manterPainelMD()
@@ -168,7 +165,6 @@ class Banco {
             else -> {}
         }
     }
-
 
     private fun manterPainelMF() {
         var voltar = readln().toInt()
@@ -202,45 +198,6 @@ class Banco {
     //FIM
 }
 
-fun voltarMenuOpcoes() {
-
-    try {
-        escolha = readln().toInt()
-    } catch (e: NumberFormatException) {
-        println("Entrada inválida!")
-        println("0 - Voltar")
-        voltarMenuOpcoes()
-    }
-
-    when (escolha) {
-        0 -> {
-            when (cliente.plano) {
-                NORMAL -> {
-                    println(CarteiraFisicaMenu.menu)
-                    escolha = readln().toInt()
-                }
-
-                DIGITAL -> {
-                    println(CarteiraDigitalMenu.menu)
-                    escolha = readln().toInt()
-                }
-
-                PREMIUM -> {
-                    println(CarteiraDigitalMenu.menu)
-                    escolha = readln().toInt()
-                }
-
-                else -> {}
-            }
-        }
-
-        else -> {
-            println("Entrada inválida!!")
-            voltarMenuOpcoes()
-        }
-    }
-}
-
 fun voltarMenuOpcoesDireto() {
 
     when (cliente.plano) {
@@ -255,18 +212,5 @@ fun voltarMenuOpcoesDireto() {
         }
         //          PREMIUM
         else -> {}
-    }
-}
-
-// Jogar essa função para uma classe a parte
-fun validacaoSenha(): Boolean {
-    println("Entre com a sua senha: ")
-    val senhaParaValidar = readln()
-
-    return if (senhaParaValidar == cliente.senha) {
-        true
-    } else {
-        println("Senha inválida:")
-        validacaoSenha()
     }
 }
