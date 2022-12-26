@@ -1,3 +1,5 @@
+import kotlin.random.Random
+
 var dinheiroGuardado = 0.0
 
 interface Carteira {
@@ -44,7 +46,7 @@ class CarteiraFisica() : Carteira {
             """
 Seu extrato: 
 $extrato===================
-Saldo atual $${currencyFormatter.format(minhaCarteiraFisica.saldo)}
+Saldo atual ${currencyFormatter.format(minhaCarteiraFisica.saldo)}
 PRESSIONE "0" PARA VOLTAR AO MENU PRINCIPAL
         """.trimIndent()
         )
@@ -96,8 +98,38 @@ PRESSIONE "0" PARA VOLTAR AO MENU PRINCIPAL
 
     }
 
-    fun pagarBoleto() {}
+    fun pagarBoleto() {
+        println("Entre com o código de barras do seu boleto: (Basta entrar com os número para ver o valor!!)")
 
+        try {
+            readln().toInt()
+        } catch (e: NumberFormatException) {
+            println("Entrada inválida!")
+            pagarBoleto()
+        }
+
+        val random = Random.nextInt(50, 1000)
+        println("Valor do boleto ${currencyFormatter.format(random)}")
+
+        if (validacaoSenha()) {
+            if (random <= saldo) {
+                println(
+                    "Boleto no valor de ${currencyFormatter.format(random)} pago!!\n" +
+                            "RESSIONE '0' PARA VOLTAR AO MENU PRINCIPAL"
+                )
+                saldo -= random
+                extrato += "Boleto no valor de ${currencyFormatter.format(random)} pago!!\n"
+            } else {
+                println("Saldo insuficiente!! Seu saldo atual é de ${currencyFormatter.format(saldo)}")
+                println("PRESSIONE 0 PARA VOLTAR AO MENU PRINCIPAL")
+            }
+        } else {
+            println("Saldo insuficiente!! Seu saldo atual é de ${currencyFormatter.format(saldo)}")
+            pagarBoleto()
+        }
+
+        return
+    }
 }
 
 class CarteiraDigital() : Carteira {
@@ -171,10 +203,41 @@ PRESSIONE "0" PARA VOLTAR AO MENU PRINCIPAL
 
     }
 
-    fun pagarBoleto() {}
+    fun pagarBoleto() {
+        println("Entre com o código de barras do seu boleto: (Basta entrar com os número para ver o valor!!)")
+
+        try {
+            readln().toInt()
+        } catch (e: NumberFormatException) {
+            println("Entrada inválida!")
+            pagarBoleto()
+        }
+
+        val random = Random.nextInt(50, 1000)
+        println("Valor do boleto ${currencyFormatter.format(random)}")
+
+        if (validacaoSenha()) {
+            if (random <= saldo) {
+                println(
+                    "Boleto no valor de ${currencyFormatter.format(random)} pago!!\n" +
+                            "RESSIONE '0' PARA VOLTAR AO MENU PRINCIPAL"
+                )
+                saldo -= random
+                extrato += "Boleto no valor de ${currencyFormatter.format(random)} pago!!\n"
+            } else {
+                println("Saldo insuficiente!! Seu saldo atual é de ${currencyFormatter.format(saldo)}")
+                println("PRESSIONE 0 PARA VOLTAR AO MENU PRINCIPAL")
+            }
+        } else {
+            println("Saldo insuficiente!! Seu saldo atual é de ${currencyFormatter.format(saldo)}")
+            pagarBoleto()
+        }
+
+        return
+    }
 
     fun investir() {
-        println(acoes.AcoesPainel.menu)
+        println(Acoes.AcoesPainel.menu)
         println("Entre com o código da ação que você deseja investir:")
 
         val acao = try {

@@ -1,7 +1,6 @@
 import MenuFuncionalidades.*
 import Planos.*
-import Carteiras.*
-import enPaineis.*
+import PainelInicial.*
 import java.text.NumberFormat
 import java.util.*
 
@@ -25,6 +24,7 @@ class Banco {
 
     //CLIENTES
     private fun clienteNormal() {
+
         println(PainelClienteNormal.menu)
 
         try {
@@ -36,7 +36,7 @@ class Banco {
 
         when (escolha) {
             1 -> carteiraFisica()
-            2 -> printarDados()
+            2 -> if (validacaoSenha()) printarDados()
             0 -> return println("Fechando Banco...")
             else -> {
                 println("Entrada inválida!!")
@@ -57,7 +57,7 @@ class Banco {
 
         when (escolha) {
             1 -> carteiraDigital()
-            2 -> printarDados()
+            2 -> if (validacaoSenha()) printarDados()
             0 -> return println("Fechando Banco...")
             else -> {
                 println("Entrada inválida!!")
@@ -73,13 +73,12 @@ class Banco {
             escolha = readln().toInt()
         } catch (e: NumberFormatException) {
             println("Entrada inválida!")
-            clientePremium()
         }
 
         when (escolha) {
             1 -> carteiraFisica()
             2 -> carteiraDigital()
-            3 -> printarDados()
+            3 -> if (validacaoSenha()) printarDados()
             0 -> return println("Fechando Banco...")
             else -> {
                 println("Entrada inválida!!")
@@ -88,7 +87,7 @@ class Banco {
         }
     }
 
-    //CARTEIRAS
+    //Carteiras
     private fun carteiraFisica() {
 
         println(CarteiraFisicaMenu.menu)
@@ -105,12 +104,12 @@ class Banco {
                 1 -> minhaCarteiraFisica.monstrarSaldo()
                 2 -> minhaCarteiraFisica.deposito()
                 3 -> minhaCarteiraFisica.saque()
-//              4 -> minhaCarteiraFisica.pagarBoleto()
+                4 -> minhaCarteiraFisica.pagarBoleto()
                 5 -> minhaCarteiraFisica.mostrarExtrato()
                 0 -> break
                 else -> println(NenhumaSelecaoAceitavelVoltarMenu.menu)
             }
-            manterPainelMF()
+            manterPainelCF()
         } while (escolha != 0)
 
         if (cliente.plano == PREMIUM) {
@@ -135,7 +134,7 @@ class Banco {
             when (escolha) {
                 1 -> minhaCarteiraDigital.monstrarSaldo()
                 2 -> minhaCarteiraDigital.transferenciaPix()
-//              3 -> minhaCarteiraDigital.pagarBoleto()
+                3 -> minhaCarteiraDigital.pagarBoleto()
                 4 -> minhaCarteiraDigital.investir()
                 5 -> minhaCarteiraDigital.guardar()
                 6 -> minhaCarteiraDigital.mostrarExtrato()
@@ -152,6 +151,7 @@ class Banco {
         }
     }
 
+    //-
     private fun printarDados() {
         println(cliente)
 
@@ -161,12 +161,12 @@ class Banco {
         when (cliente.plano) {
             NORMAL -> clienteNormal()
             DIGITAL -> clienteDigital()
-//          PREMIUM
             else -> {}
         }
     }
 
-    private fun manterPainelMF() {
+    private fun manterPainelCF() {
+
         var voltar = readln().toInt()
         while (voltar != 0) {
             println("Entrada inválida!!")
@@ -180,7 +180,9 @@ class Banco {
             else -> {}
         }
     }
+
     private fun manterPainelMD() {
+
         var voltar = readln().toInt()
         while (voltar != 0) {
             println("Entrada inválida!!")
@@ -194,10 +196,7 @@ class Banco {
             else -> {}
         }
     }
-
-    //FIM
 }
-
 fun voltarMenuOpcoesDireto() {
 
     when (cliente.plano) {
@@ -210,7 +209,6 @@ fun voltarMenuOpcoesDireto() {
             println(CarteiraDigitalMenu.menu)
             escolha = readln().toInt()
         }
-        //          PREMIUM
         else -> {}
     }
 }
